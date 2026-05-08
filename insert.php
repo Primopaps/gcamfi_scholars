@@ -1,20 +1,3 @@
-<?php
-$conn = new mysqli("localhost", "root", "", "gcamfi_scholars");
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$year_level = $_POST['year_level'];
-$name = $_POST['name'];
-$birthdate = $_POST['birthdate'];
-$birthplace = $_POST['birthplace'];
-$status = $_POST['status'];
-
-$sql = "INSERT INTO info (year_level, name, birthdate, birthplace, status)
-        VALUES ('$year_level', '$name', '$birthdate', '$birthplace', '$status')";
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
