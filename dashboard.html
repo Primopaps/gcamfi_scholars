@@ -1,0 +1,114 @@
+<?php
+$conn = new mysqli("localhost", "root", "", "gcamfi_scholars");
+
+$total = $conn->query("SELECT COUNT(*) as total FROM info")->fetch_assoc()['total'];
+$completed = $conn->query("SELECT COUNT(*) as total FROM info WHERE status='Completed'")->fetch_assoc()['total'];
+$partial = $conn->query("SELECT COUNT(*) as total FROM info WHERE status='Partial'")->fetch_assoc()['total'];
+$missing = $conn->query("SELECT COUNT(*) as total FROM info WHERE status='Missing'")->fetch_assoc()['total'];
+?>
+
+<?php
+include "session_check.php";
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<!-- TOP NAVBAR -->
+<nav class="navbar navbar-dark bg-warning">
+    <div class="container-fluid">
+
+        <!-- ☰ BUTTON -->
+        <button class="btn btn-light"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#sidebar">
+    ☰
+</button>
+
+        <!-- TITLE -->
+        <span class="navbar-brand d-flex align-items-center text-dark">
+    <img src="gcamfi_logo.jpg" alt="Logo" width="100" height="40" class="me-2">
+    Gonzalo and Carmen Abaya Memorial Foundation, Inc.
+</span>
+
+        <!-- ADMIN NAME -->
+        <span class="text-black">
+            <?php echo $_SESSION['user'] ?? 'Guest'; ?>
+        </span>
+
+    </div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <a href="application.php" class="btn btn-info w-100 mb-2">Application Form</a>
+        <a href="dashboard.php" class="btn btn-warning w-100 mb-2">Dashboard</a>
+        <a href="index.php" class="btn btn-danger w-100 mb-2">Add Scholar</a>
+        <a href="view.php" class="btn btn-secondary w-100">View Records</a>
+        <a href="logout.php" class="btn btn-dark w-100 mt-3">Logout</a>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="container mt-4">
+
+    <div class="row g-3">
+
+        <div class="col-md-3">
+            <div class="card bg-primary text-black text-center shadow">
+                <div class="card-body">
+                    <h5>Total Scholars</h5>
+                    <h2><?php echo $total; ?></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-success text-black text-center shadow">
+                <div class="card-body">
+                    <h5>Completed</h5>
+                    <h2><?php echo $completed; ?></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark text-center shadow">
+                <div class="card-body">
+                    <h5>Partial</h5>
+                    <h2><?php echo $partial; ?></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-danger text-black text-center shadow">
+                <div class="card-body">
+                    <h5>Missing</h5>
+                    <h2><?php echo $missing; ?></h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- BOOTSTRAP JS (IMPORTANT FOR MENU TO WORK) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
